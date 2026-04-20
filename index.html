@@ -45,19 +45,43 @@
       outline: none; border-color: var(--focus); background: #fff;
       box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
     }
+
+    /* ✅ FIXED: Contact Method Toggle - Proper visual state for both options */
     .contact-toggle {
-      display: flex; gap: 10px; background: #f8fafc; padding: 5px; border-radius: 12px;
+      display: flex; gap: 10px; background: #f8fafc; padding: 5px; 
+      border-radius: 12px; position: relative;
     }
-    .contact-toggle input[type="radio"] { display: none; }
+    .contact-toggle input[type="radio"] { 
+      position: absolute; opacity: 0; pointer-events: none; 
+    }
     .toggle-btn {
-      flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 10px; border-radius: 9px; cursor: pointer; font-weight: 600; font-size: 14px;
-      transition: var(--transition); border: 2px solid transparent; user-select: none;
+      flex: 1; display: flex; align-items: center; justify-content: center; 
+      gap: 8px; padding: 10px 12px; border-radius: 9px; cursor: pointer; 
+      font-weight: 600; font-size: 14px; transition: all 0.2s ease; 
+      border: 2px solid transparent; user-select: none; position: relative;
+      color: var(--text-muted); background: transparent;
     }
-    .whatsapp-btn { background: var(--wa-bg); color: var(--wa-text); border-color: var(--wa-border); }
-    .call-btn { background: transparent; color: var(--text-muted); border-color: transparent; }
-    #whatsapp:checked + .whatsapp-btn { box-shadow: 0 2px 8px rgba(22, 163, 74, 0.2); opacity: 1; }
-    #call:checked + .call-btn { background: var(--call-bg); color: var(--call-text); border-color: var(--call-border); box-shadow: 0 2px 8px rgba(225, 29, 72, 0.2); }
+    .toggle-btn.whatsapp-btn { color: var(--wa-text); }
+    .toggle-btn.call-btn { color: var(--text-muted); }
+    
+    /* ✅ Selected state - WhatsApp */
+    #whatsapp:checked + .toggle-btn.whatsapp-btn {
+      background: var(--wa-bg) !important;
+      border-color: var(--wa-border) !important;
+      color: var(--wa-text) !important;
+      box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25) !important;
+      font-weight: 700 !important;
+    }
+    /* ✅ Selected state - Call */
+    #call:checked + .toggle-btn.call-btn {
+      background: var(--call-bg) !important;
+      border-color: var(--call-border) !important;
+      color: var(--call-text) !important;
+      box-shadow: 0 2px 8px rgba(225, 29, 72, 0.25) !important;
+      font-weight: 700 !important;
+    }
+    .toggle-btn:hover { transform: translateY(-1px); }
+
     .checkbox-group { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; color: var(--text-muted); margin-top: 18px; }
     .checkbox-group input { margin-top: 3px; accent-color: var(--focus); width: 16px; height: 16px; }
     .checkbox-group a { color: var(--focus); text-decoration: none; font-weight: 500; }
@@ -73,6 +97,8 @@
       font-size: 12.5px; font-weight: 500; color: var(--text-muted);
     }
     .trust-signals i { color: var(--focus); margin-right: 4px; }
+    
+    /* Custom Checkbox Group for Subjects */
     .checkbox-group-custom { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
     .checkbox-item {
       display: flex; align-items: center; padding: 12px 14px; background: #fafbfc;
@@ -94,6 +120,8 @@
     .checkbox-item input[type="checkbox"]:checked + .checkmark::after { opacity: 1; transform: scale(1); }
     .checkbox-item input[type="checkbox"]:checked ~ .label-text { color: var(--text-main); font-weight: 600; }
     .label-text { font-size: 15px; color: var(--text-muted); transition: var(--transition); }
+    
+    /* Phone Input with Country Code */
     .phone-input-wrapper {
       display: flex; align-items: center; border: 1.5px solid var(--border);
       border-radius: 10px; overflow: hidden; background: #fafbfc; transition: var(--transition);
@@ -111,6 +139,8 @@
       font-family: inherit; background: transparent; outline: none;
     }
     .input-hint { display: block; font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    
+    /* Testimonials Container */
     .testimonials-container {
       margin-top: 20px; padding: 20px;
       background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
@@ -162,6 +192,8 @@
       position: absolute; bottom: 0; left: 0; height: 3px;
       background: var(--focus); transition: width 0.1s linear;
     }
+    
+    /* Floating WhatsApp Button */
     .floating-whatsapp {
       position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px;
       background: #25d366; color: white; border-radius: 50%;
@@ -194,6 +226,8 @@
       0%, 100% { box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4); }
       50% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.7); }
     }
+    
+    /* Success Overlay */
     .success-overlay {
       position: absolute; inset: 0; background: var(--card-bg); z-index: 10;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -210,6 +244,8 @@
       font-weight: 600; transition: var(--transition); font-size: 15px;
     }
     .wa-cta:hover { background: #1da851; transform: translateY(-2px); }
+    
+    /* Mobile Optimization */
     @media (max-width: 480px) {
       .form-card { padding: 24px 20px; }
       .form-header h1 { font-size: 22px; }
@@ -297,13 +333,18 @@
           <input type="email" id="email" name="email" placeholder="parent@email.com" required>
         </div>
 
+        <!-- ✅ FIXED: Contact Method Toggle -->
         <div class="form-group">
           <label>Preferred Contact Method</label>
           <div class="contact-toggle">
             <input type="radio" name="contactMethod" id="whatsapp" value="whatsapp" checked>
-            <label for="whatsapp" class="toggle-btn whatsapp-btn"><i class="fa-brands fa-whatsapp"></i> WhatsApp</label>
+            <label for="whatsapp" class="toggle-btn whatsapp-btn">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </label>
             <input type="radio" name="contactMethod" id="call" value="call">
-            <label for="call" class="toggle-btn call-btn"><i class="fa-solid fa-phone"></i> Call Me</label>
+            <label for="call" class="toggle-btn call-btn">
+              <i class="fa-solid fa-phone"></i> Call Me
+            </label>
           </div>
         </div>
 
@@ -327,9 +368,9 @@
       </form>
 
       <div class="trust-signals">
-        <span><i class="fa-solid fa-users"></i> 500+ Students</span>
+        <span><i class="fa-solid fa-users"></i> 1500+ Students</span>
         <span><i class="fa-solid fa-chalkboard-user"></i> Verified Tutors</span>
-        <span><i class="fa-solid fa-shield-halved"></i> 100% Free & Confidential</span>
+        <span><i class="fa-solid fa-shield-halved"></i> 100% Free Counselling & Confidential</span>
       </div>
 
       <!-- Auto-Rotating Testimonials -->
@@ -362,8 +403,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // ================= CONFIGURATION =================
+      // 🔧 UPDATE THESE VALUES FOR YOUR BUSINESS:
       const SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz7sXHwutBmIjlVeSUBFkgx9DFmFYMYK_ueCv0MavOyDsV7bgEIJwgJQwsoDzsCvhXX/exec';
-      const WHATSAPP_NUMBER = '61426283742';
+      const WHATSAPP_NUMBER = '61426283742'; // No + sign, just country code + number
 
       // ================= TESTIMONIALS =================
       const testimonials = [
@@ -478,7 +520,7 @@
       const submitBtn = document.querySelector('.submit-btn');
       const phoneInput = document.getElementById('phone');
 
-      // Phone number formatting (10 digits only)
+      // Phone number formatting (10 digits only for Nepal)
       phoneInput.addEventListener('input', (e) => {
         e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
       });
@@ -516,7 +558,7 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Validate subjects
+        // Validate subjects - at least one must be selected
         const selectedSubjects = Array.from(document.querySelectorAll('input[name="subjects"]:checked')).map(cb => cb.value);
         if (selectedSubjects.length === 0) {
           document.getElementById('subjectsContainer').style.borderColor = '#ef4444';
@@ -532,7 +574,7 @@
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
 
-        // Prepare payload
+        // Prepare payload for Google Sheets
         const payload = {
           studentName: document.getElementById('studentName').value.trim(),
           grade: document.getElementById('grade').value,
@@ -545,10 +587,11 @@
         };
 
         try {
-          // ✅ CRITICAL FIX: Use mode: 'no-cors' for Google Apps Script CORS compatibility
+          // ✅ CORS FIX: Use mode: 'no-cors' for Google Apps Script compatibility
+          // Note: Response will be opaque (unreadable), but submission still works
           await fetch(SHEET_WEB_APP_URL, {
             method: 'POST',
-            mode: 'no-cors', // ⚠️ Bypasses CORS preflight - response will be opaque but submission still works
+            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
@@ -560,10 +603,10 @@
           return;
         }
 
-        // Show success overlay
+        // Show success overlay with dynamic message
         showSuccessOverlay(payload);
         
-        // Reset form
+        // Reset form for next submission
         form.reset();
         document.querySelectorAll('input[name="subjects"]:checked').forEach(cb => cb.checked = false);
         submitBtn.textContent = 'Book My Free Consultation';
@@ -571,13 +614,21 @@
       });
 
       // ================= FLOATING WHATSAPP =================
+      // Show floating button after 3 seconds (doesn't block form initially)
       setTimeout(() => {
         document.querySelector('.floating-whatsapp').classList.add('show');
       }, 3000);
 
+      // Track floating button clicks (for Facebook Pixel analytics)
       document.querySelector('.floating-whatsapp')?.addEventListener('click', () => {
         if (typeof fbq !== 'undefined') fbq('track', 'Contact', { method: 'WhatsApp Floating Button' });
       });
+
+      // ✅ FIX: Ensure toggle visual state is correct on page load
+      const selectedMethod = document.querySelector('input[name="contactMethod"]:checked');
+      if (selectedMethod) {
+        selectedMethod.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
   </script>
 </body>
